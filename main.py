@@ -30,6 +30,7 @@ if __name__ == "__main__":
         "errorlog": "-",  # Log errors to stderr
         "accesslog": "-" if debug else None,  # Log access in debug mode only
         "capture_output": debug,  # Capture app output in debug mode
+        "log_file": "-",  # Log to stdout instead of stderr
     }
 
     run(app, host=host, port=port, server="gunicorn", **gunicorn_options)
