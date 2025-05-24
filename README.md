@@ -94,7 +94,7 @@ Configure your application using these environment variables:
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `PORT` | Port number for the server (automatically provided by Railway) | `8080` |
-| `DEBUG` | Enable debug logging (verbose Gunicorn logs) | `False` |
+| `LOG_LEVEL` | Gunicorn log level (debug, info, warning, error, critical) | `info` |
 
 ### Setting Environment Variables
 

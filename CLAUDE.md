@@ -36,8 +36,8 @@ PORT=3000 python main.py
 railway up
 
 # Railway automatically provides a PORT variable - no need to set it manually!
-# Only set DEBUG if needed (defaults to False for production safety)
-railway variables set DEBUG=False
+# Set log level if needed (defaults to 'info' for production)
+railway variables set LOG_LEVEL=debug
 ```
 
 ## Architecture
@@ -57,7 +57,7 @@ railway variables set DEBUG=False
 2. Uses Railway's auto-provided PORT variable (best practice) with fallback to 8080 for local development
 3. Gunicorn binds to `[::]` for dual-stack IPv4/IPv6 support (required for Railway's public and private networking)
 4. Health check endpoint returns JSON for Railway's health monitoring
-5. Debug mode controlled via environment variable, defaulting to False for production safety
+5. Gunicorn log level controlled via LOG_LEVEL environment variable (debug, info, warning, error, critical)
 6. Production uses Gunicorn directly via start command, local development uses Bottle's built-in server
 
 ## Testing Changes

@@ -4,7 +4,7 @@ import os
 
 # Debug: Print environment info at startup
 print(f"Starting app with PORT env var: {os.getenv('PORT', 'NOT SET')}")
-print(f"DEBUG env var: {os.getenv('DEBUG', 'NOT SET')}")
+print(f"LOG_LEVEL env var: {os.getenv('LOG_LEVEL', 'NOT SET')}")
 print(f"All env vars: {', '.join(sorted(os.environ.keys()))}")
 
 app = Bottle()
@@ -18,7 +18,7 @@ def index():
     <p>This is a minimal Python Bottle application template.</p>
     <p>Deploy your own in minutes!</p>
     <hr>
-    <p><small>Debug: PORT={port_info}, DEBUG={os.getenv('DEBUG', 'NOT SET')}</small></p>
+    <p><small>Debug: PORT={port_info}, LOG_LEVEL={os.getenv('LOG_LEVEL', 'NOT SET')}</small></p>
     """
 
 
@@ -35,7 +35,7 @@ def health():
 # For local development only - Railway uses gunicorn directly
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8080))
-    debug = os.getenv("DEBUG", "False").lower() == "true"
+    debug = os.getenv("LOG_LEVEL", "info").lower() == "debug"
     
     # Simple development server
     run(app, host="localhost", port=port, debug=debug)
