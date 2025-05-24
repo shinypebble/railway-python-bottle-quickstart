@@ -24,7 +24,7 @@ python main.py
 gunicorn main:app --bind "0.0.0.0:8080"
 
 # Run with Gunicorn (dual-stack IPv4/IPv6, same as Railway)
-gunicorn main:app --bind "[::]:${PORT:-8080}"
+gunicorn main:app --bind 0.0.0.0:${PORT:-8080} --bind "[::]:${PORT:-8080}"
 
 # Run with custom port
 PORT=3000 python main.py
