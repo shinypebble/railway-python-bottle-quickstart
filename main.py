@@ -25,12 +25,6 @@ if __name__ == "__main__":
     debug = os.getenv("DEBUG", "False").lower() == "true"
 
     # Configure Gunicorn options based on debug mode
-    gunicorn_options = {
-        "loglevel": "debug" if debug else "info",
-        "errorlog": "-",  # Log errors to stderr
-        "accesslog": "-" if debug else None,  # Log access to stdout in debug mode
-        "capture_output": debug,  # Capture app output (print statements)
-        "enable_stdio_inheritance": True,  # Enable stdio inheritance
-    }
+    gunicorn_options = {"loglevel": "debug" if debug else "info"}
 
     run(app, host=host, port=port, server="gunicorn", **gunicorn_options)

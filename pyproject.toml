@@ -8,3 +8,21 @@ dependencies = ["bottle>=0.13.3", "gunicorn>=23.0.0"]
 
 [tool.setuptools]
 py-modules = ["main"]
+
+[tool.black]
+line-length = 160
+target-version = ['py313']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
