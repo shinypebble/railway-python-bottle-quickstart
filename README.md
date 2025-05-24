@@ -1,6 +1,6 @@
 # Bottle on Railway
 
-A minimal Python Bottle web application template, ready for instant deployment on Railway.
+A minimal Python [Bottle](https://bottlepy.org/docs/dev/) web application template, ready for instant deployment on Railway.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/bottle)
 
@@ -43,7 +43,7 @@ railway up
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone git@github.com:shinypebble/railway-python-bottle-quickstart.git
    cd railway-python-bottle-quickstart
    ```
 
@@ -74,8 +74,15 @@ railway up
    ```
 
 4. **Run the application**
+   
+   Development server:
    ```bash
    python main.py
+   ```
+   
+   Production-like with Gunicorn:
+   ```bash
+   gunicorn main:app --bind "0.0.0.0:8080"
    ```
 
 5. **Visit** http://localhost:8080
@@ -86,23 +93,28 @@ Configure your application using these environment variables:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `PORT` | Port number for the server | `8080` |
-| `HOST` | Host address to bind to | `0.0.0.0` |
+| `PORT` | Port number for the server (automatically provided by Railway) | `8080` |
 | `DEBUG` | Enable debug logging (verbose Gunicorn logs) | `False` |
 
 ### Setting Environment Variables
 
 **Local Development:**
 ```bash
-export PORT=3000
-export DEBUG=True
+# Application defaults to port 8080 if PORT not set
 python main.py
+
+# Or specify a custom port
+PORT=3000 python main.py
+
+# Enable debug mode
+DEBUG=True python main.py
 ```
 
 **On Railway:**
-Environment variables can be configured in the Railway dashboard or using the CLI:
+Railway automatically provides the PORT variable - you don't need to set it! Only configure other variables as needed:
 ```bash
-railway variables set PORT=3000
+# Only set DEBUG if needed (defaults to False for production)
+railway variables set DEBUG=False
 ```
 
 ## 📦 Adding Dependencies
@@ -176,13 +188,19 @@ This template uses Railpack, Railway's modern build system that:
 - Provides optimal caching strategies
 - Sets production-ready defaults
 
+### Networking
+- **Dual-stack support**: Gunicorn binds to `[::]` for both IPv4 (public) and IPv6 (private) traffic
+- **Auto-provided PORT**: Railway automatically assigns and manages the PORT variable
+- **Health checks**: Built-in `/health` endpoint for Railway monitoring
+
 See `railway.json` for current configuration.
 
 ## 🚨 Troubleshooting
 
 ### Application won't start
 - Check logs: `railway logs`
-- Ensure `PORT` environment variable is used: `os.getenv('PORT', 8080)`
+- Ensure the app binds to `0.0.0.0:$PORT` (Railway's provided PORT)
+- Verify the app uses: `os.getenv('PORT', 8080)` for port configuration
 - Verify Gunicorn is installed in dependencies
 
 ### Dependencies not installing

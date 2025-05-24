@@ -17,14 +17,17 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 # Install dependencies
 uv sync
 
-# Run the application locally
+# Run the application locally with development server
 python main.py
 
-# Run with custom environment variables
-PORT=3000 DEBUG=True python main.py
+# Run with Gunicorn (production-like, IPv4 only)
+gunicorn main:app --bind "0.0.0.0:8080"
 
-# Test debug mode (enables verbose Gunicorn logging)
-DEBUG=true PORT=3000 python main.py
+# Run with Gunicorn (dual-stack IPv4/IPv6, same as Railway)
+gunicorn main:app --bind "[::]:${PORT:-8080}"
+
+# Run with custom port
+PORT=3000 python main.py
 ```
 
 ### Deployment
@@ -32,8 +35,8 @@ DEBUG=true PORT=3000 python main.py
 # Deploy to Railway
 railway up
 
-# Set environment variables on Railway
-railway variables set PORT=3000
+# Railway automatically provides a PORT variable - no need to set it manually!
+# Only set DEBUG if needed (defaults to False for production safety)
 railway variables set DEBUG=False
 ```
 
@@ -51,13 +54,16 @@ railway variables set DEBUG=False
 
 ### Key Design Decisions
 1. Uses Railpack (not Nixpacks) for faster builds with uv package manager
-2. Gunicorn configured to bind to `0.0.0.0:$PORT` for Railway compatibility
-3. Health check endpoint returns JSON for Railway's health monitoring
-4. Debug mode controlled via environment variable, defaulting to False for production safety
+2. Uses Railway's auto-provided PORT variable (best practice) with fallback to 8080 for local development
+3. Gunicorn binds to `[::]` for dual-stack IPv4/IPv6 support (required for Railway's public and private networking)
+4. Health check endpoint returns JSON for Railway's health monitoring
+5. Debug mode controlled via environment variable, defaulting to False for production safety
+6. Production uses Gunicorn directly via start command, local development uses Bottle's built-in server
 
 ## Testing Changes
 
 Since this is a template repository, ensure any modifications maintain:
 1. Zero-configuration deployment capability on Railway
-2. Compatibility with Railway's PORT environment variable
+2. Proper handling of Railway's auto-provided PORT variable (do not hardcode ports)
 3. The health check endpoint at `/health` returning 200 status
+4. Local development fallback when PORT is not provided

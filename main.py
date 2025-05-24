@@ -19,12 +19,10 @@ def health():
     return {"status": "healthy", "message": "Bottle app is running"}
 
 
+# For local development only - Railway uses gunicorn directly
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8080))
-    host = os.getenv("HOST", "0.0.0.0")
     debug = os.getenv("DEBUG", "False").lower() == "true"
-
-    # Configure Gunicorn options based on debug mode
-    gunicorn_options = {"loglevel": "debug" if debug else "info"}
-
-    run(app, host=host, port=port, server="gunicorn", **gunicorn_options)
+    
+    # Simple development server
+    run(app, host="localhost", port=port, debug=debug)
