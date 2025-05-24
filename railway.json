@@ -4,7 +4,7 @@
     "builder": "RAILPACK"
   },
   "deploy": {
-    "startCommand": "gunicorn main:app --bind 0.0.0.0:${PORT:-8080} --bind [::]:${PORT:-8080}",
+    "startCommand": "gunicorn main:app --bind 0.0.0.0:$PORT --bind [::]:$PORT",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10,
     "healthcheckPath": "/health",
