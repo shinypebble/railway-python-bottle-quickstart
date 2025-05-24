@@ -2,7 +2,7 @@
 
 A minimal Python [Bottle](https://bottlepy.org/docs/dev/) web application template, ready for instant deployment on Railway.
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/gdH5gC?referralCode=rq6lF8)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/e2fvmQ?referralCode=rq6lF8)
 
 ## ✨ Features
 
