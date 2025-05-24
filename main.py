@@ -4,7 +4,8 @@ import os
 
 # Debug: Print environment info at startup
 print(f"Starting app with PORT env var: {os.getenv('PORT', 'NOT SET')}")
-print(f"All environment variables: {[k for k in os.environ.keys() if 'PORT' in k]}")
+print(f"DEBUG env var: {os.getenv('DEBUG', 'NOT SET')}")
+print(f"All env vars: {', '.join(sorted(os.environ.keys()))}")
 
 app = Bottle()
 
@@ -17,7 +18,7 @@ def index():
     <p>This is a minimal Python Bottle application template.</p>
     <p>Deploy your own in minutes!</p>
     <hr>
-    <p><small>Debug: PORT env var = {port_info}</small></p>
+    <p><small>Debug: PORT={port_info}, DEBUG={os.getenv('DEBUG', 'NOT SET')}</small></p>
     """
 
 
