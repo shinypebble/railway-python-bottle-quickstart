@@ -28,9 +28,9 @@ if __name__ == "__main__":
     gunicorn_options = {
         "loglevel": "debug" if debug else "info",
         "errorlog": "-",  # Log errors to stderr
-        "accesslog": "-" if debug else None,  # Log access in debug mode only
-        "capture_output": debug,  # Capture app output in debug mode
-        "log_file": "-",  # Log to stdout instead of stderr
+        "accesslog": "-" if debug else None,  # Log access to stdout in debug mode
+        "capture_output": debug,  # Capture app output (print statements)
+        "enable_stdio_inheritance": True,  # Enable stdio inheritance
     }
 
     run(app, host=host, port=port, server="gunicorn", **gunicorn_options)
