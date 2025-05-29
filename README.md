@@ -1,8 +1,57 @@
-# Bottle on Railway
+# Deploy and Host Bottle on Railway
 
-A minimal Python [Bottle](https://bottlepy.org/docs/dev/) web application template, ready for instant deployment on Railway.
+ [Bottle](https://bottlepy.org/docs/dev/) is a fast, simple and lightweight WSGI micro web-framework for Python. Perfect for building small web applications, REST APIs, and prototypes with minimal overhead and zero dependencies beyond the Python standard library.
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/e2fvmQ?referralCode=rq6lF8)
+
+## About Hosting Bottle
+
+Hosting Bottle applications requires a WSGI server for production deployments. This template provides a pre-configured setup with Gunicorn as the WSGI server, automatic port binding, health check endpoints, and environment variable configuration. Railway handles the infrastructure automatically - no server management, manual scaling, or complex deployment pipelines needed. Just push your code and Railway builds, deploys, and scales your Bottle app instantly.
+
+## Common Use Cases
+
+- Quick API prototypes and microservices
+- Lightweight webhook handlers and integrations  
+- Simple REST APIs that need to scale
+- Learning Python web development
+- Minimal web scrapers and data processors
+
+## Dependencies for Bottle Hosting
+
+- Python 3.13+ runtime environment
+- Gunicorn WSGI server for production serving
+- Environment variable support for configuration
+- Health check endpoint for monitoring
+
+### Deployment Dependencies
+
+- [Bottle Documentation](https://bottlepy.org/docs/dev/) - Framework documentation and tutorials
+- [Gunicorn Documentation](https://docs.gunicorn.org) - WSGI server configuration guide
+- [Railway Python Guide](https://docs.railway.com/guides/python) - Platform-specific Python deployment tips
+
+### Implementation Details
+
+This template includes a minimal `main.py` with two routes:
+
+```python
+# Health check endpoint for Railway monitoring
+@app.route('/health')
+def health_check():
+    return {"status": "healthy", "timestamp": time.time()}
+
+# Main route
+@app.route('/')
+def index():
+    return '<h1>Hello from Bottle!</h1>'
+```
+
+The app automatically binds to Railway's provided PORT environment variable with IPv4/IPv6 dual-stack support.
+
+## Why Deploy Bottle on Railway?
+
+Railway is a singular platform to deploy your infrastructure stack. Railway will host your infrastructure so you don't have to deal with configuration, while allowing you to vertically and horizontally scale it.
+
+By deploying Bottle on Railway, you are one step closer to supporting a complete full-stack application with minimal burden. Host your servers, databases, AI agents, and more on Railway.
 
 ## ✨ Features
 
